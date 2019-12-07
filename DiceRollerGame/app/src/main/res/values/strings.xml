@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">DiceRoller</string>
+    <string name="roll">Roll</string>
+    <string name="user">Player %d</string>
+    <string name="result">Result</string>
+    <string name="winner_message">"Player %d won with result %d.</string>
+    <string name="switch_player">Switch Player</string>
+</resources>
