@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">DiceRoller</string>
+    <string name="enter_number">Enter a number</string>
+    <string name="first_state">1</string>
+    <string name="roll">Roll</string>
+    <string name="reset">Reset</string>
+    <string name="input_error_message">Enter a number between 1 to 6</string>
+    <string name="last_state_message">It\'\s the last state</string>
+</resources>
