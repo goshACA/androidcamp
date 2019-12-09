@@ -9,15 +9,16 @@
 
     <com.example.customprogressbar.custom_view.ProgressView
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:strokeWidth="30dp"
-            app:progress="0.6"
+            app:progress="0.02"
             app:progressEndColor="@color/colorAccent"
             app:progressStartColor="@color/colorPrimaryDark"
             app:backgroundColor="@color/colorPrimary"
-            app:layout_constraintEnd_toEndOf="parent"
             android:clickable="true"
             android:focusable="true"/>
 

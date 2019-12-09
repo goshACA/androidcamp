@@ -13,28 +13,24 @@ class ProgressView @JvmOverloads constructor(
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
-    private val backgroundPaint = Paint().apply {
+    private fun createPaint() = Paint().apply {
         isAntiAlias = true
-        color = DEF_COLOR
         style = Paint.Style.FILL
         strokeWidth = DEF_STROKE_WIDTH
         strokeCap = Paint.Cap.ROUND
     }
 
-    private val progressPaint = Paint().apply {
-        isAntiAlias = true
-        style = Paint.Style.FILL
-        strokeWidth = DEF_STROKE_WIDTH
-        strokeCap = Paint.Cap.ROUND
-    }
+    private val backgroundPaint = createPaint()
+    private val progressPaint = createPaint()
 
     private var progress: Float = DEF_PROGRESS
+        set(value) {
+            field = value
+            invalidate()
+        }
     private var startColor: Int = DEF_COLOR
     private var endColor: Int = DEF_COLOR
-    private var progressEndX: Float = 0f
     private var strokeWidth: Float = DEF_STROKE_WIDTH
-    private var startX = 0f
-    private var startY = 0f
 
 
     init {
@@ -61,7 +57,7 @@ class ProgressView @JvmOverloads constructor(
 
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        val desiredWidth = 12 * strokeWidth //left space at both edges
+        val desiredWidth = 10 * strokeWidth //left space at both edges
         val desiredHeight = strokeWidth
 
         val widthMode = MeasureSpec.getMode(widthMeasureSpec)
@@ -93,16 +89,12 @@ class ProgressView @JvmOverloads constructor(
     }
 
 
-    override fun performClick(): Boolean {
-        super.performClick()
-        invalidate()
-        return true
-    }
-
     override fun onTouchEvent(event: MotionEvent?): Boolean {
+        if (event?.action == MotionEvent.ACTION_DOWN) {
+            return true
+        }
         if (event?.action == MotionEvent.ACTION_MOVE) {
-            progress = if (event.x - startX > 0) (event.x - startX).coerceAtMost(100f) / 100 else 0f
-            performClick()
+            progress = if (event.x > 0) (event.x).coerceAtMost(100f) / 100 else 0f
             return true
         }
         return super.onTouchEvent(event)
@@ -110,49 +102,32 @@ class ProgressView @JvmOverloads constructor(
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
-        val length = 9f * strokeWidth
-        startX = width / 12f
-        startY = height / 2f
-        progressEndX = measureProgressLength(length) + startX
-
+        val halfStrokeWidth = strokeWidth / 2
+        canvas?.drawLine(halfStrokeWidth, halfStrokeWidth, width - halfStrokeWidth, halfStrokeWidth, backgroundPaint)
+        val progressEndX = measureProgressLength(width.toFloat())
         progressPaint.shader = LinearGradient(
-            startX, 0f,
-            progressEndX, 0f,
+            halfStrokeWidth, halfStrokeWidth,
+            progressEndX, halfStrokeWidth,
             startColor, endColor, Shader.TileMode.CLAMP
         )
 
-        canvas?.drawCircle(startX, startY, strokeWidth / 2, backgroundPaint)  //left background edge
-        canvas?.drawRect(
-            startX, startY - strokeWidth / 2,
-            length + startX, startY + strokeWidth / 2, backgroundPaint //background progress line
-        )
-        canvas?.drawCircle(startX + length, startY, strokeWidth / 2, backgroundPaint) //right background edge
-
-        val progressLength = measureProgressLength(length + progressPaint.strokeWidth)
-        if (progressLength >= strokeWidth) {
-
-            canvas?.drawCircle(startX, startY, strokeWidth / 2, progressPaint)
-            canvas?.drawRect(
-                startX,
-                startY - strokeWidth / 2,
-                progressLength + startX - strokeWidth,
-                startY + strokeWidth / 2,
+        if (progressEndX - halfStrokeWidth < 0) {
+            canvas?.drawLine(halfStrokeWidth, halfStrokeWidth, width - halfStrokeWidth, halfStrokeWidth, progressPaint)
+            canvas?.drawLine(
+                halfStrokeWidth + progressEndX,
+                halfStrokeWidth,
+                width - halfStrokeWidth,
+                halfStrokeWidth,
+                backgroundPaint
+            )
+        } else
+            canvas?.drawLine(
+                halfStrokeWidth,
+                halfStrokeWidth,
+                (progressEndX - halfStrokeWidth).coerceAtLeast(halfStrokeWidth),
+                halfStrokeWidth,
                 progressPaint
             )
-            canvas?.drawCircle(
-                progressLength + startX - strokeWidth,
-                startY,
-                strokeWidth / 2,
-                progressPaint
-            )
-        } else {
-            canvas?.drawArc(
-                startX - strokeWidth / 2, startY - progressLength / 2,
-                startX - strokeWidth / 2 + progressLength, startY + progressLength / 2, 90f,
-                180f, true, progressPaint
-            )
-        }
-
     }
 
     private fun measureProgressLength(length: Float): Float = length * progress
