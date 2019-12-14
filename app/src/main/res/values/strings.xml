@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">android_third_task</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="generate_number">Generate Number</string>
+    <string name="you_lost">You lost</string>
+    <string name="play_again">Play Again</string>
+    <string name="share">Share</string>
+    <string name="congratulations">Congratulations,</string>
+    <string name="game_rules">1.Sign in\n2.Enter a number between 1 and 100\n3.Random number will be generated\n4.If input
+        and generated number are equal, you will win\n otherwise you will lose
+    </string>
+</resources>

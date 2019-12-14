@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools" android:id="@+id/navigation_graph"
+            app:startDestination="@id/signFragment">
+    <fragment android:id="@+id/signFragment" android:name="com.example.android_third_task.SignFragment"
+              android:label="Registration" tools:layout="@layout/fragment_sign">
+        <action android:id="@+id/action_signFragment_to_gameFragment" app:destination="@id/gameFragment"/>
+        <argument android:name="user" app:argType="com.example.android_third_task.data.User"/>
+    </fragment>
+    <fragment android:id="@+id/gameFragment" android:name="com.example.android_third_task.GameFragment"
+              android:label="Game" tools:layout="@layout/fragment_game">
+        <action android:id="@+id/action_gameFragment_to_winFragment2" app:destination="@id/winFragment2"
+                app:popUpToInclusive="false" app:popUpTo="@+id/signFragment"/>
+        <action android:id="@+id/action_gameFragment_to_gameOverFragment" app:destination="@id/gameOverFragment"
+                app:popUpToInclusive="false" app:popUpTo="@+id/signFragment"/>
+        <argument android:name="user" app:argType="com.example.android_third_task.data.User"/>
+    </fragment>
+    <fragment android:id="@+id/gameOverFragment" android:name="com.example.android_third_task.GameOverFragment"
+              android:label="Loser" tools:layout="@layout/fragment_game_over">
+        <argument android:name="user" app:argType="com.example.android_third_task.data.User"/>
+        <action android:id="@+id/action_gameOverFragment_to_gameFragment" app:destination="@id/gameFragment"
+                app:popUpTo="@+id/signFragment" app:popUpToInclusive="false"/>
+    </fragment>
+    <fragment android:id="@+id/winFragment2" android:name="com.example.android_third_task.WinFragment"
+              android:label="Winner" tools:layout="@layout/fragment_win">
+        <argument android:name="user" app:argType="com.example.android_third_task.data.User"/>
+        <argument android:name="winNumber" app:argType="integer"/>
+        <action android:id="@+id/action_winFragment2_to_gameFragment" app:destination="@id/gameFragment"
+                app:popUpTo="@+id/signFragment" app:popUpToInclusive="false"/>
+    </fragment>
+    <fragment android:id="@+id/rulesFragment" android:name="com.example.android_third_task.RulesFragment"
+              android:label="Game Rules" tools:layout="@layout/fragment_rules"/>
+</navigation>
