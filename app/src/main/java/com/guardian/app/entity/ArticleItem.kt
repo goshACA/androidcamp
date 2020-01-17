@@ -26,7 +26,6 @@ open class ArticleItem {
     @ColumnInfo(name = "title")
     @SerializedName("webTitle")
     var title: String = ""
-
     fun getImg() = fields.thumbnail
 
     class Fields {

@@ -7,6 +7,7 @@ import com.guardian.app.entity.ApiResponse
 import com.guardian.app.entity.RecyclerArticleItem
 import com.guardian.app.repository.RecyclerArticleRepository
 import com.guardian.app.service.BackgroundService
+import com.guardian.app.service.NotificationJobIntentService
 import com.guardian.app.utils.NetworkConnectionUtils
 import com.guardian.app.view.fragment.NewsFragment
 import io.reactivex.Observer
@@ -126,6 +127,8 @@ class GetRecyclerDataUseCase(private val repository: RecyclerArticleRepository) 
     }
 
     fun startService(intent: Intent, context: Context){
+        NotificationJobIntentService.repository = repository
+        NotificationJobIntentService.enqueueWork(context, intent)
         context.startService(intent)
         BackgroundService.repository = repository
     }

@@ -19,6 +19,7 @@ import com.guardian.app.adapter.ArticleAdapter
 import com.guardian.app.adapter.SwipeToDeleteCallback
 import com.guardian.app.entity.RecyclerArticleItem
 import com.guardian.app.service.BackgroundService
+import com.guardian.app.service.NotificationJobIntentService
 import com.guardian.app.utils.BitmapUtils
 import com.guardian.app.utils.LocalDateUtils
 import com.guardian.app.viewmodel.RecyclerViewModel
@@ -125,7 +126,7 @@ class NewsFragment : Fragment(), LifecycleOwner {
     }
 
     override fun onDestroyView() {
-        val intent = Intent(context, BackgroundService::class.java)
+        val intent = Intent(context, NotificationJobIntentService::class.java)
         viewModel.startService(intent, context!!)
         super.onDestroyView()
     }
