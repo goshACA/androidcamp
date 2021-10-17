@@ -1,5 +1,5 @@
 ## Introduction to mobile programming: Kotlin and Android 
- The repository includes 10 branches (5 implemented in kotlin and 5 for android apps)
+ The repository includes 10 branches (5 implemented in kotlin and 6 for android apps)
  *  **kt-rand-number**  - random number game 
  * **kt-tag-search** - user search based on tags  - using generic interfaces
  * **kt-delegated-prop** - using delegated and weak properties
@@ -10,3 +10,4 @@
  * **binding-navigation-app** - random number game with data binding and fragment navigation
  * **guardian-app** - application using Guardian API to get articles to save and delete using retrofit, room, background service, viewmodels, transition inflater, fragment navigation
  * **guardian-app-koin** - adding koin to the mentioned application
+ * **guardian-app-paging** - adding paging to the mentioned application (with koin), usecases, getting mvvm structure
